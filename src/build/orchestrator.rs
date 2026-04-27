@@ -304,6 +304,10 @@ impl BuildOrchestrator {
         };
 
         // Build container command
+        // Isolate Python bytecode cache per target to prevent .pyc corruption
+        // when multiple containers share the same workspace in parallel builds.
+        // This mirrors GA behavior where each target builds in its own runner.
+        let pycache_dir = format!("/workspace/{}/.pycache", target.build_dir);
         let mut container_cmd = ContainerCommand::new(*runtime, DEFAULT_IMAGE)
             .mount(workspace, "/workspace", false)
             .mount(config_dir, "/workspace/config", true)
@@ -312,7 +316,8 @@ impl BuildOrchestrator {
             .env(
                 "CMAKE_PREFIX_PATH",
                 "/workspace/zephyr/share/zephyr-package/cmake",
-            );
+            )
+            .env("PYTHONPYCACHEPREFIX", &pycache_dir);
 
         // Mount extra Zephyr modules
         for (i, module_path) in extra_modules.iter().enumerate() {
@@ -506,6 +511,10 @@ impl BuildOrchestrator {
         };
 
         // Build container command
+        // Isolate Python bytecode cache per target to prevent .pyc corruption
+        // when multiple containers share the same workspace in parallel builds.
+        // This mirrors GA behavior where each target builds in its own runner.
+        let pycache_dir = format!("/workspace/{}/.pycache", target.build_dir);
         let mut container_cmd = ContainerCommand::new(*runtime, DEFAULT_IMAGE)
             .mount(workspace, "/workspace", false)
             .mount(config_dir, "/workspace/config", true)
@@ -514,7 +523,8 @@ impl BuildOrchestrator {
             .env(
                 "CMAKE_PREFIX_PATH",
                 "/workspace/zephyr/share/zephyr-package/cmake",
-            );
+            )
+            .env("PYTHONPYCACHEPREFIX", &pycache_dir);
 
         // Mount extra Zephyr modules
         for (i, module_path) in extra_modules.iter().enumerate() {
@@ -743,6 +753,10 @@ impl BuildOrchestrator {
         };
 
         // Build container command
+        // Isolate Python bytecode cache per target to prevent .pyc corruption
+        // when multiple containers share the same workspace in parallel builds.
+        // This mirrors GA behavior where each target builds in its own runner.
+        let pycache_dir = format!("/workspace/{}/.pycache", target.build_dir);
         let mut container_cmd = ContainerCommand::new(*runtime, DEFAULT_IMAGE)
             .mount(workspace, "/workspace", false)
             .mount(config_dir, "/workspace/config", true)
@@ -751,7 +765,8 @@ impl BuildOrchestrator {
             .env(
                 "CMAKE_PREFIX_PATH",
                 "/workspace/zephyr/share/zephyr-package/cmake",
-            );
+            )
+            .env("PYTHONPYCACHEPREFIX", &pycache_dir);
 
         // Mount extra Zephyr modules
         for (i, module_path) in extra_modules.iter().enumerate() {
@@ -927,6 +942,10 @@ impl BuildOrchestrator {
         };
 
         // Build container command
+        // Isolate Python bytecode cache per target to prevent .pyc corruption
+        // when multiple containers share the same workspace in parallel builds.
+        // This mirrors GA behavior where each target builds in its own runner.
+        let pycache_dir = format!("/workspace/{}/.pycache", target.build_dir);
         let mut container_cmd = ContainerCommand::new(*runtime, DEFAULT_IMAGE)
             .mount(workspace, "/workspace", false)
             .mount(config_dir, "/workspace/config", true)
@@ -935,7 +954,8 @@ impl BuildOrchestrator {
             .env(
                 "CMAKE_PREFIX_PATH",
                 "/workspace/zephyr/share/zephyr-package/cmake",
-            );
+            )
+            .env("PYTHONPYCACHEPREFIX", &pycache_dir);
 
         // Mount extra Zephyr modules
         for (i, module_path) in extra_modules.iter().enumerate() {
